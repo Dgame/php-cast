@@ -2,76 +2,76 @@
 
 declare(strict_types=1);
 
-namespace Dgame\Cast\Must;
+namespace Dgame\Cast\Assert;
 
 use AssertionError;
 
 function int(mixed $value, ?string $message = null): int
 {
-    $result = \Dgame\Cast\Should\int($value);
+    $result = \Dgame\Cast\Assume\int($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be int');
 }
 
 function intify(mixed $value, ?string $message = null): int
 {
-    $result = \Dgame\Cast\Should\intify($value);
+    $result = \Dgame\Cast\Assume\intify($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be int');
 }
 
 function float(mixed $value, ?string $message = null): float
 {
-    $result = \Dgame\Cast\Should\float($value);
+    $result = \Dgame\Cast\Assume\float($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be float');
 }
 
 function floatify(mixed $value, ?string $message = null): float
 {
-    $result = \Dgame\Cast\Should\floatify($value);
+    $result = \Dgame\Cast\Assume\floatify($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be float');
 }
 
 function bool(mixed $value, ?string $message = null): bool
 {
-    $result = \Dgame\Cast\Should\bool($value);
+    $result = \Dgame\Cast\Assume\bool($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be bool');
 }
 
 function boolify(mixed $value, ?string $message = null): bool
 {
-    $result = \Dgame\Cast\Should\boolify($value);
+    $result = \Dgame\Cast\Assume\boolify($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be bool');
 }
 
 function string(mixed $value, ?string $message = null): string
 {
-    $result = \Dgame\Cast\Should\string($value);
+    $result = \Dgame\Cast\Assume\string($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be string');
 }
 
 function stringify(mixed $value, ?string $message = null): string
 {
-    $result = \Dgame\Cast\Should\stringify($value);
+    $result = \Dgame\Cast\Assume\stringify($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be string');
 }
 
 function number(mixed $value, ?string $message = null): float|int
 {
-    $result = \Dgame\Cast\Should\number($value);
+    $result = \Dgame\Cast\Assume\number($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be float|int');
 }
 
 function scalar(mixed $value, ?string $message = null): float|int|bool|string
 {
-    $result = \Dgame\Cast\Should\scalar($value);
+    $result = \Dgame\Cast\Assume\scalar($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be float|int|bool|string');
 }
@@ -81,7 +81,7 @@ function scalar(mixed $value, ?string $message = null): float|int|bool|string
  */
 function unsigned(mixed $value, ?string $message = null): int
 {
-    $result = \Dgame\Cast\Should\unsigned($value);
+    $result = \Dgame\Cast\Assume\unsigned($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be >= 0');
 }
@@ -91,7 +91,7 @@ function unsigned(mixed $value, ?string $message = null): int
  */
 function signed(mixed $value, ?string $message = null): int
 {
-    $result = \Dgame\Cast\Should\signed($value);
+    $result = \Dgame\Cast\Assume\signed($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be <= 0');
 }
@@ -101,7 +101,7 @@ function signed(mixed $value, ?string $message = null): int
  */
 function positive(mixed $value, ?string $message = null): int
 {
-    $result = \Dgame\Cast\Should\positive($value);
+    $result = \Dgame\Cast\Assume\positive($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be > 0');
 }
@@ -111,7 +111,7 @@ function positive(mixed $value, ?string $message = null): int
  */
 function negative(mixed $value, ?string $message = null): int
 {
-    $result = \Dgame\Cast\Should\negative($value);
+    $result = \Dgame\Cast\Assume\negative($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be < 0');
 }
@@ -121,7 +121,7 @@ function negative(mixed $value, ?string $message = null): int
  */
 function assoc(mixed $value, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Should\assoc($value);
+    $result = \Dgame\Cast\Assume\assoc($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be an assoc. array');
 }
@@ -136,7 +136,7 @@ function assoc(mixed $value, ?string $message = null): array
  */
 function assocOf(callable $typeEnsurance, array $values, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Should\assocOf($typeEnsurance, $values);
+    $result = \Dgame\Cast\Assume\assocOf($typeEnsurance, $values);
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be an assoc. array');
 }
@@ -151,7 +151,7 @@ function assocOf(callable $typeEnsurance, array $values, ?string $message = null
  */
 function assocOfNonEmpty(callable $typeEnsurance, array $values, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Should\assocOfNonEmpty($typeEnsurance, $values);
+    $result = \Dgame\Cast\Assume\assocOfNonEmpty($typeEnsurance, $values);
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be a non-empty assoc. array');
 }
@@ -166,7 +166,7 @@ function assocOfNonEmpty(callable $typeEnsurance, array $values, ?string $messag
  */
 function mapOf(callable $typeEnsurance, array $values, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Should\mapOf($typeEnsurance, $values);
+    $result = \Dgame\Cast\Assume\mapOf($typeEnsurance, $values);
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be an assoc. array');
 }
@@ -181,7 +181,7 @@ function mapOf(callable $typeEnsurance, array $values, ?string $message = null):
  */
 function mapOfNonEmpty(callable $typeEnsurance, array $values, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Should\mapOfNonEmpty($typeEnsurance, $values);
+    $result = \Dgame\Cast\Assume\mapOfNonEmpty($typeEnsurance, $values);
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be a non-empty assoc. array');
 }
@@ -196,7 +196,7 @@ function mapOfNonEmpty(callable $typeEnsurance, array $values, ?string $message 
  */
 function listOf(callable $typeEnsurance, array $values, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Should\listOf($typeEnsurance, $values);
+    $result = \Dgame\Cast\Assume\listOf($typeEnsurance, $values);
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be a list');
 }
@@ -211,7 +211,7 @@ function listOf(callable $typeEnsurance, array $values, ?string $message = null)
  */
 function listOfNonEmpty(callable $typeEnsurance, array $values, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Should\listOfNonEmpty($typeEnsurance, $values);
+    $result = \Dgame\Cast\Assume\listOfNonEmpty($typeEnsurance, $values);
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be a non-empty list');
 }

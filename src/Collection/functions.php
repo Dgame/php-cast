@@ -54,7 +54,7 @@ function filterMap(callable $typeEnsurance, array $values, callable $callback): 
 function all(array $values, callable $predicate): bool
 {
     foreach ($values as $value) {
-        if (!$predicate($values)) {
+        if (!$predicate($value)) {
             return false;
         }
     }
@@ -71,7 +71,7 @@ function all(array $values, callable $predicate): bool
 function any(array $values, callable $predicate): bool
 {
     foreach ($values as $value) {
-        if ($predicate($values)) {
+        if ($predicate($value)) {
             return true;
         }
     }

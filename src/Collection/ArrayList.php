@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dgame\Cast\Collection;
 
 use ArrayAccess;
-use function Dgame\Cast\Should\assocOf;
+use function Dgame\Cast\Assume\assocOf;
 use Iterator;
 
 /**
@@ -16,16 +16,22 @@ use Iterator;
 final class ArrayList implements ArrayAccess, Iterator
 {
     /**
+     * @var callable(mixed): T
+     */
+    private $typeEnsurance;
+    /**
      * @var T[]
      */
     private array $values;
     private int $offset = 0;
 
     /**
+     * @param callable(mixed): T $typeEnsurance
      * @param T ...$values
      */
-    public function __construct(mixed ...$values)
+    public function __construct(callable $typeEnsurance, mixed ...$values)
     {
+        $this->typeEnsurance = $typeEnsurance;
         $this->values = $values === [] ? [] : array_values($values);
     }
 
@@ -42,7 +48,7 @@ final class ArrayList implements ArrayAccess, Iterator
             return null;
         }
 
-        $self         = new self();
+        $self         = new self($typeEnsurance);
         $self->values = $values;
 
         return $self;
@@ -56,7 +62,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public static function filtered(callable $typeEnsurance, array $values): self
     {
-        $self         = new self();
+        $self         = new self($typeEnsurance);
         $self->values = filter($typeEnsurance, $values);
 
         return $self;
@@ -99,7 +105,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public function filter(callable $predicate): self
     {
-        $self         = new self();
+        $self         = new self($this->typeEnsurance);
         $self->values = array_filter($this->values, $predicate);
 
         return $self;
@@ -112,7 +118,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public function map(callable $predicate): self
     {
-        $self         = new self();
+        $self         = new self($this->typeEnsurance);
         $self->values = array_map($predicate, $this->values);
 
         return $self;
@@ -126,7 +132,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public function slice(int $offset, ?int $length = null): self
     {
-        $self         = new self();
+        $self         = new self($this->typeEnsurance);
         $self->values = array_slice($this->values, $offset, $length);
 
         return $self;
@@ -183,7 +189,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->values[$offset] = $value;
+        $this->values[$offset] = ($this->typeEnsurance)($value);
     }
 
     /**

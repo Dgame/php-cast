@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dgame\Cast\Should;
+namespace Dgame\Cast\Assume;
 
 use function Dgame\Cast\Collection\all;
 
