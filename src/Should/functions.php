@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Should;
 
+use function Dgame\Cast\Collection\all;
+
 function int(mixed $value): ?int
 {
     return is_int($value) ? $value : filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
@@ -205,25 +207,17 @@ function assocOfNonEmpty(callable $typeEnsurance, array $values): ?array
  */
 function mapOf(callable $typeEnsurance, array $values): ?array
 {
-    $output = [];
-    foreach ($values as $key => $value) {
-        if ($value === null) {
-            return null;
-        }
-
-        $result = $typeEnsurance($value);
-        if ($result === null) {
-            return null;
-        }
-
-        if (!is_string($key)) {
-            return null;
-        }
-
-        $output[$key] = $result;
+    $values = assocOf($typeEnsurance, $values);
+    if ($values === null) {
+        return null;
     }
 
-    return $output;
+    if (!all(array_keys($values), 'is_string')) {
+        return null;
+    }
+
+    /** @phpstan-ignore-next-line */
+    return $values;
 }
 
 /**
@@ -286,7 +280,7 @@ if (version_compare(PHP_VERSION, '8.1') === 1) {
     function array_is_list(array $array): bool
     {
         if ($array === []) {
-            return \true;
+            return true;
         }
 
         $nextKey = -1;

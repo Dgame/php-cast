@@ -44,3 +44,37 @@ function filterMap(callable $typeEnsurance, array $values, callable $callback): 
 {
     return array_map($callback, filter($typeEnsurance, $values));
 }
+
+/**
+ * @param array<int|string, mixed> $values
+ * @param callable(mixed): bool    $predicate
+ *
+ * @return bool
+ */
+function all(array $values, callable $predicate): bool
+{
+    foreach ($values as $value) {
+        if (!$predicate($values)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * @param array<int|string, mixed> $values
+ * @param callable(mixed): bool    $predicate
+ *
+ * @return bool
+ */
+function any(array $values, callable $predicate): bool
+{
+    foreach ($values as $value) {
+        if ($predicate($values)) {
+            return true;
+        }
+    }
+
+    return false;
+}

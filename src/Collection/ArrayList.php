@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dgame\Cast\Collection;
 
 use ArrayAccess;
-use Iterator;
 use function Dgame\Cast\Should\assocOf;
+use Iterator;
 
 /**
  * @template T
@@ -31,30 +31,55 @@ final class ArrayList implements ArrayAccess, Iterator
 
     /**
      * @param callable(mixed): T $typeEnsurance
-     * @param mixed ...$values;
+     * @param mixed              ...$values ;
      *
      * @return self<T>|null
      */
     public static function of(callable $typeEnsurance, mixed ...$values): ?self
     {
-        $self = new self();
-        $self->values = assocOf($typeEnsurance, $values);
+        $values = assocOf($typeEnsurance, $values);
+        if ($values === null) {
+            return null;
+        }
+
+        $self         = new self();
+        $self->values = $values;
 
         return $self;
     }
 
     /**
-     * @param callable(mixed): T $typeEnsurance
+     * @param callable(mixed): T  $typeEnsurance
      * @param array<mixed, mixed> $values
      *
      * @return self<T>
      */
     public static function filtered(callable $typeEnsurance, array $values): self
     {
-        $self = new self();
+        $self         = new self();
         $self->values = filter($typeEnsurance, $values);
 
         return $self;
+    }
+
+    /**
+     * @param callable(mixed): bool $predicate
+     *
+     * @return bool
+     */
+    public function all(callable $predicate): bool
+    {
+        return all($this->values, $predicate);
+    }
+
+    /**
+     * @param callable(mixed): bool $predicate
+     *
+     * @return bool
+     */
+    public function any(callable $predicate): bool
+    {
+        return any($this->values, $predicate);
     }
 
     public function isEmpty(): bool
@@ -74,7 +99,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public function filter(callable $predicate): self
     {
-        $self = new self();
+        $self         = new self();
         $self->values = array_filter($this->values, $predicate);
 
         return $self;
@@ -87,7 +112,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public function map(callable $predicate): self
     {
-        $self = new self();
+        $self         = new self();
         $self->values = array_map($predicate, $this->values);
 
         return $self;
@@ -101,7 +126,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public function slice(int $offset, ?int $length = null): self
     {
-        $self = new self();
+        $self         = new self();
         $self->values = array_slice($this->values, $offset, $length);
 
         return $self;
@@ -125,7 +150,7 @@ final class ArrayList implements ArrayAccess, Iterator
 
     /**
      * @param int $offset
-     * @param T $default
+     * @param T   $default
      *
      * @return T
      */
@@ -154,7 +179,7 @@ final class ArrayList implements ArrayAccess, Iterator
 
     /**
      * @param int|null $offset
-     * @param T $value
+     * @param T        $value
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
