@@ -164,7 +164,7 @@ function assoc(mixed $value): ?array
 function assocOf(callable $typeEnsurance, array $values): ?array
 {
     $output = [];
-    foreach ($values as $key => &$value) {
+    foreach ($values as $key => $value) {
         if ($value === null) {
             return null;
         }
@@ -191,6 +191,52 @@ function assocOf(callable $typeEnsurance, array $values): ?array
 function assocOfNonEmpty(callable $typeEnsurance, array $values): ?array
 {
     $values = assocOf($typeEnsurance, $values);
+
+    return $values === null || $values === [] ? null : $values;
+}
+
+/**
+ * @template T
+ *
+ * @param callable(mixed): T       $typeEnsurance
+ * @param array<int|string, mixed> $values
+ *
+ * @return array<string, T>|null
+ */
+function mapOf(callable $typeEnsurance, array $values): ?array
+{
+    $output = [];
+    foreach ($values as $key => $value) {
+        if ($value === null) {
+            return null;
+        }
+
+        $result = $typeEnsurance($value);
+        if ($result === null) {
+            return null;
+        }
+
+        if (!is_string($key)) {
+            return null;
+        }
+
+        $output[$key] = $result;
+    }
+
+    return $output;
+}
+
+/**
+ * @template T
+ *
+ * @param callable(mixed): T       $typeEnsurance
+ * @param array<int|string, mixed> $values
+ *
+ * @return non-empty-array<string, T>|null
+ */
+function mapOfNonEmpty(callable $typeEnsurance, array $values): ?array
+{
+    $values = mapOf($typeEnsurance, $values);
 
     return $values === null || $values === [] ? null : $values;
 }

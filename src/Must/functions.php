@@ -162,6 +162,36 @@ function assocOfNonEmpty(callable $typeEnsurance, array $values, ?string $messag
  * @param callable(mixed): T       $typeEnsurance
  * @param array<int|string, mixed> $values
  *
+ * @return array<string, T>
+ */
+function mapOf(callable $typeEnsurance, array $values, ?string $message = null): array
+{
+    $result = \Dgame\Cast\Should\mapOf($typeEnsurance, $values);
+
+    return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be an assoc. array');
+}
+
+/**
+ * @template T
+ *
+ * @param callable(mixed): T       $typeEnsurance
+ * @param array<int|string, mixed> $values
+ *
+ * @return non-empty-array<string, T>
+ */
+function mapOfNonEmpty(callable $typeEnsurance, array $values, ?string $message = null): array
+{
+    $result = \Dgame\Cast\Should\mapOfNonEmpty($typeEnsurance, $values);
+
+    return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be a non-empty assoc. array');
+}
+
+/**
+ * @template T
+ *
+ * @param callable(mixed): T       $typeEnsurance
+ * @param array<int|string, mixed> $values
+ *
  * @return array<int, T>
  */
 function listOf(callable $typeEnsurance, array $values, ?string $message = null): array
