@@ -165,13 +165,15 @@ use function Dgame\Cast\Assume\collectionOf;
 $values = collectionOf('Dgame\Cast\Assume\int', $data['values'] ?? null); // $values is of type array<int|string, int>|null
 ```
 
-If not all values in the `array` are of type `int`, you get `null`. If you just want to filter the non-`int` values, you can do that by using `filter`:
+If **not** all values in the `array` are of type `int`, you get `null`. If you just want to filter the non-`int` values, you can do that by using `filter`:
 
 ```php
 use function Dgame\Cast\Collection\filter;
 
 $values = filter('Dgame\Cast\Assume\int', $data['values'] ?? []); // $values is of type array<int|string, int>
 ```
+
+But be aware that `filter` expects an `array<int|string, mixed>` as input and not `mixed`!
 
 ### list
 
