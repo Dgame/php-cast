@@ -103,21 +103,6 @@ function unsigned(mixed $value): ?int
 }
 
 /**
- * @phpstan-return int<min, 0>
- */
-function signed(mixed $value): ?int
-{
-    $result = number($value);
-    if ($result === null) {
-        return null;
-    }
-
-    $result = (int) $result;
-
-    return $result <= 0 ? $result : null;
-}
-
-/**
  * @phpstan-return int<1, max>
  */
 function positive(mixed $value): ?int
@@ -150,7 +135,7 @@ function negative(mixed $value): ?int
 /**
  * @return array<int|string, mixed>|null
  */
-function assoc(mixed $value): ?array
+function collection(mixed $value): ?array
 {
     return is_array($value) ? $value : null;
 }
@@ -158,13 +143,18 @@ function assoc(mixed $value): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
  *
  * @return array<int|string, T>|null
  */
-function assocOf(callable $typeEnsurance, array $values): ?array
+function collectionOf(callable $typeEnsurance, mixed $values): ?array
 {
+    $values = collection($values);
+    if ($values === null) {
+        return null;
+    }
+
     $output = [];
     foreach ($values as $key => $value) {
         if ($value === null) {
@@ -185,14 +175,14 @@ function assocOf(callable $typeEnsurance, array $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
  *
  * @return non-empty-array<int|string, T>|null
  */
-function assocOfNonEmpty(callable $typeEnsurance, array $values): ?array
+function collectionOfNonEmpty(callable $typeEnsurance, mixed $values): ?array
 {
-    $values = assocOf($typeEnsurance, $values);
+    $values = collectionOf($typeEnsurance, $values);
 
     return $values === null || $values === [] ? null : $values;
 }
@@ -200,14 +190,14 @@ function assocOfNonEmpty(callable $typeEnsurance, array $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
  *
  * @return array<string, T>|null
  */
-function mapOf(callable $typeEnsurance, array $values): ?array
+function mapOf(callable $typeEnsurance, mixed $values): ?array
 {
-    $values = assocOf($typeEnsurance, $values);
+    $values = collectionOf($typeEnsurance, $values);
     if ($values === null) {
         return null;
     }
@@ -223,12 +213,12 @@ function mapOf(callable $typeEnsurance, array $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
  *
  * @return non-empty-array<string, T>|null
  */
-function mapOfNonEmpty(callable $typeEnsurance, array $values): ?array
+function mapOfNonEmpty(callable $typeEnsurance, mixed $values): ?array
 {
     $values = mapOf($typeEnsurance, $values);
 
@@ -238,14 +228,14 @@ function mapOfNonEmpty(callable $typeEnsurance, array $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
  *
  * @return array<int, T>|null
  */
-function listOf(callable $typeEnsurance, array $values): ?array
+function listOf(callable $typeEnsurance, mixed $values): ?array
 {
-    $values = assocOf($typeEnsurance, $values);
+    $values = collectionOf($typeEnsurance, $values);
     if ($values === null || !array_is_list($values)) {
         return null;
     }
@@ -257,19 +247,19 @@ function listOf(callable $typeEnsurance, array $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
  *
  * @return non-empty-array<int, T>|null
  */
-function listOfNonEmpty(callable $typeEnsurance, array $values): ?array
+function listOfNonEmpty(callable $typeEnsurance, mixed $values): ?array
 {
     $values = listOf($typeEnsurance, $values);
 
     return $values === null || $values === [] ? null : $values;
 }
 
-if (version_compare(PHP_VERSION, '8.1') === 1) {
+if (version_compare(PHP_VERSION, '8.1') === -1) {
     /**
      * @template T
      *

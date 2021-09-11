@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dgame\Cast\Collection;
 
 use ArrayAccess;
-use function Dgame\Cast\Assume\assocOf;
+use function Dgame\Cast\Assume\collectionOf;
 use Iterator;
 
 /**
@@ -27,12 +27,12 @@ final class ArrayList implements ArrayAccess, Iterator
 
     /**
      * @param callable(mixed): T $typeEnsurance
-     * @param T ...$values
+     * @param T                  ...$values
      */
     public function __construct(callable $typeEnsurance, mixed ...$values)
     {
         $this->typeEnsurance = $typeEnsurance;
-        $this->values = $values === [] ? [] : array_values($values);
+        $this->values        = $values === [] ? [] : array_values($values);
     }
 
     /**
@@ -43,7 +43,7 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public static function of(callable $typeEnsurance, mixed ...$values): ?self
     {
-        $values = assocOf($typeEnsurance, $values);
+        $values = collectionOf($typeEnsurance, $values);
         if ($values === null) {
             return null;
         }
@@ -189,7 +189,10 @@ final class ArrayList implements ArrayAccess, Iterator
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->values[$offset] = ($this->typeEnsurance)($value);
+        $value = ($this->typeEnsurance)($value);
+        assert($value !== null);
+
+        $this->values[$offset] = $value;
     }
 
     /**

@@ -43,7 +43,12 @@
     "autoload": {
         "psr-4": {
             "Dgame\\Cast\\": "src/"
-        }
+        },
+        "files": [
+            "src/Assume/functions.php",
+            "src/Assert/functions.php",
+            "src/Collection/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

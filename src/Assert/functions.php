@@ -87,16 +87,6 @@ function unsigned(mixed $value, ?string $message = null): int
 }
 
 /**
- * @phpstan-return int<min, 0>
- */
-function signed(mixed $value, ?string $message = null): int
-{
-    $result = \Dgame\Cast\Assume\signed($value);
-
-    return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be <= 0');
-}
-
-/**
  * @phpstan-return int<1, max>
  */
 function positive(mixed $value, ?string $message = null): int
@@ -119,9 +109,9 @@ function negative(mixed $value, ?string $message = null): int
 /**
  * @return array<int|string, mixed>
  */
-function assoc(mixed $value, ?string $message = null): array
+function collection(mixed $value, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Assume\assoc($value);
+    $result = \Dgame\Cast\Assume\collection($value);
 
     return $result ?? throw new AssertionError($message ?? var_export($value, true) . ' must be an assoc. array');
 }
@@ -129,14 +119,15 @@ function assoc(mixed $value, ?string $message = null): array
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
+ * @param string|null        $message
  *
  * @return array<int|string, T>
  */
-function assocOf(callable $typeEnsurance, array $values, ?string $message = null): array
+function collectionOf(callable $typeEnsurance, mixed $values, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Assume\assocOf($typeEnsurance, $values);
+    $result = \Dgame\Cast\Assume\collectionOf($typeEnsurance, $values);
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be an assoc. array');
 }
@@ -144,14 +135,15 @@ function assocOf(callable $typeEnsurance, array $values, ?string $message = null
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
+ * @param string|null        $message
  *
  * @return non-empty-array<int|string, T>
  */
-function assocOfNonEmpty(callable $typeEnsurance, array $values, ?string $message = null): array
+function collectionOfNonEmpty(callable $typeEnsurance, mixed $values, ?string $message = null): array
 {
-    $result = \Dgame\Cast\Assume\assocOfNonEmpty($typeEnsurance, $values);
+    $result = \Dgame\Cast\Assume\collectionOfNonEmpty($typeEnsurance, $values);
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be a non-empty assoc. array');
 }
@@ -159,12 +151,13 @@ function assocOfNonEmpty(callable $typeEnsurance, array $values, ?string $messag
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
+ * @param string|null        $message
  *
  * @return array<string, T>
  */
-function mapOf(callable $typeEnsurance, array $values, ?string $message = null): array
+function mapOf(callable $typeEnsurance, mixed $values, ?string $message = null): array
 {
     $result = \Dgame\Cast\Assume\mapOf($typeEnsurance, $values);
 
@@ -174,12 +167,13 @@ function mapOf(callable $typeEnsurance, array $values, ?string $message = null):
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
+ * @param string|null        $message
  *
  * @return non-empty-array<string, T>
  */
-function mapOfNonEmpty(callable $typeEnsurance, array $values, ?string $message = null): array
+function mapOfNonEmpty(callable $typeEnsurance, mixed $values, ?string $message = null): array
 {
     $result = \Dgame\Cast\Assume\mapOfNonEmpty($typeEnsurance, $values);
 
@@ -189,12 +183,13 @@ function mapOfNonEmpty(callable $typeEnsurance, array $values, ?string $message 
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
+ * @param string|null        $message
  *
  * @return array<int, T>
  */
-function listOf(callable $typeEnsurance, array $values, ?string $message = null): array
+function listOf(callable $typeEnsurance, mixed $values, ?string $message = null): array
 {
     $result = \Dgame\Cast\Assume\listOf($typeEnsurance, $values);
 
@@ -204,12 +199,13 @@ function listOf(callable $typeEnsurance, array $values, ?string $message = null)
 /**
  * @template T
  *
- * @param callable(mixed): T       $typeEnsurance
- * @param array<int|string, mixed> $values
+ * @param callable(mixed): T $typeEnsurance
+ * @param mixed              $values
+ * @param string|null        $message
  *
  * @return non-empty-array<int, T>
  */
-function listOfNonEmpty(callable $typeEnsurance, array $values, ?string $message = null): array
+function listOfNonEmpty(callable $typeEnsurance, mixed $values, ?string $message = null): array
 {
     $result = \Dgame\Cast\Assume\listOfNonEmpty($typeEnsurance, $values);
 

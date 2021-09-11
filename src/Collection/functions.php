@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Collection;
 
+use function Dgame\Cast\Assume\collectionOf;
+
 /**
  * @template T
  *
@@ -42,7 +44,7 @@ function filter(callable $typeEnsurance, array $values): array
  */
 function filterMap(callable $typeEnsurance, array $values, callable $callback): array
 {
-    return array_map($callback, filter($typeEnsurance, $values));
+    return collectionOf($typeEnsurance, array_map($callback, filter($typeEnsurance, $values))) ?? [];
 }
 
 /**
