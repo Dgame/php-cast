@@ -11,7 +11,7 @@ The problem is, even though we checked that `$id` must be an `int`, it is actual
 To change this, you need to write / use your own phpstan rule that makes phpstan believe that it will now always be an `int`.
 So if you use your own verification methods, you must also write / use your own phpstan rules.
 
-This package tries to simplify that. To verify that something is an int, you can _assume_ that it must be an `int`. If it is not, you get `null`:
+This package tries to simplify that. To verify that something is an `int`, you can _assume_ that it must be an `int`. If it is not, you get `null`:
 
 ```php
 use function Dgame\Cast\Assume\int;
@@ -149,8 +149,46 @@ $value = scalar($data['value'] ?? null); // $value is of type int|float|bool|str
 
 # array
 
+With `collection` you can test whether your value is an `array`:
+
+```php
+use function Dgame\Cast\Assume\collection;
+
+$values = collection($data['values'] ?? null); // $values is of type array<int|string, mixed>|null
+```
+
+And with `collectionOf` you can test whether your value is an `array` of type `T`:
+
+```php
+use function Dgame\Cast\Assume\collectionOf;
+
+$values = collectionOf('Dgame\Cast\Assume\int', $data['values'] ?? null); // $values is of type array<int|string, int>|null
+```
+
+If not all values in the `array` are of type `int`, you get `null`. If you just want to filter the non-`int` values, you can do that by using `filter`:
+
+```php
+use function Dgame\Cast\Collection\filter;
+
+$values = filter('Dgame\Cast\Assume\int', $data['values'] ?? []); // $values is of type array<int|string, int>
+```
+
 ### list
+
+If you want to make sure, that you have a `list` of values (and not an assoc. array) you can use `listOf`:
+
+```php
+use function Dgame\Cast\Assume\listOf;
+
+$values = listOf('Dgame\Cast\Assume\int', $data['values'] ?? null); // $values is of type int[]|null or, to be more accurate, of type array<int, int>|null
+```
 
 ### map
 
-### filter
+If you want to make sure, that you have an assoc. array (and not a `list`) you can use `mapOf`:
+
+```php
+use function Dgame\Cast\Assume\mapOf;
+
+$values = mapOf('Dgame\Cast\Assume\int', $data['values'] ?? null); // $values is of type array<string, int>|null
+```
