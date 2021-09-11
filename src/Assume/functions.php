@@ -206,7 +206,7 @@ function mapOf(callable $typeEnsurance, mixed $values): ?array
         return null;
     }
 
-    /** @phpstan-ignore-next-line */
+    /** @phpstan-ignore-next-line => phpstan does not recognize that we ensured string-keys through the if above */
     return $values;
 }
 
@@ -240,7 +240,7 @@ function listOf(callable $typeEnsurance, mixed $values): ?array
         return null;
     }
 
-    /** @phpstan-ignore-next-line */
+    /** @phpstan-ignore-next-line => phpstan does not recognize `array_is_list` yet */
     return $values;
 }
 
