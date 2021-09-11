@@ -1,17 +1,17 @@
 # Type Assumptions & Assertions simplified
 
-Every had to validate User data? You probably used something like [Webmozart/Assert]() like
+Have you ever had to validate user data? Probably you have used something like [webmozarts/assert](https://github.com/webmozarts/assert):
 
 ```php
 $id = $data['id'] ?? null;
-Assert::isInt($id);
+Assert::integer($id);
 ```
 
-The problem is, although we verified that `$id` must be an `int`, in truth it is still seen as `mixed` for e.g. phpstan.
-That is if you don't have written your own phpstan rule which makes phpstan believe that now it will always be an `int`.
-So if you use your own verification methods, you have to write your own phpstan rules too!
+The problem is, even though we checked that `$id` must be an `int`, it is actually still seen as `mixed` (see [this example](https://phpstan.org/r/dca4ad02-603d-4fdc-814b-1cdfcfe508e7) for phpstan).
+To change this, you need to write / use your own phpstan rule that makes phpstan believe that it will now always be an `int`.
+So if you use your own verification methods, you must also write / use your own phpstan rules.
 
-This package tries to simplify that. To verify that something is an int you can _assume_ that it must be an `int`. If it isn't you get `null`:
+This package tries to simplify that. To verify that something is an int, you can _assume_ that it must be an `int`. If it is not, you get `null`:
 
 ```php
 use function Dgame\Cast\Assume\int;
@@ -29,7 +29,7 @@ use function Dgame\Cast\Assert\int;
 $id = int($data['id'] ?? null);
 ```
 
-Now `$id` is of type `int` or it fails with an `AssertionError`. A message for the `AssertionError` can be optional set too:
+Now `$id` is of type `int` or it fails with an `AssertionError`. A message for the `AssertionError` can also be optionally set:
 
 ```php
 use function Dgame\Cast\Assert\int;
@@ -37,7 +37,7 @@ use function Dgame\Cast\Assert\int;
 $id = int($data['id'] ?? null, message: 'The id of the given user must be of type int');
 ```
 
-You can do the that for [int](#int), [float](#float), [bool](#bool), [string](#string), [number](#number), [scalar](#scalar) and [array](#array) values.
+You can do that for [int](#int), [float](#float), [bool](#bool), [string](#string), [number](#number), [scalar](#scalar) and [array](#array) values.
 
 ----
 
@@ -50,7 +50,7 @@ With `intify` you get either the `int`-value or the `int`-casted `scalar` value,
 ```php
 use function Dgame\Cast\Assume\intify;
 
-$id = intify($data['id'] ?? null);
+$id = intify($data['id'] ?? null); // $id is of type int|null
 ```
 
 ### unsigned
@@ -92,7 +92,7 @@ With `floatify` you get either the `float`-value or the `float`-casted `scalar` 
 ```php
 use function Dgame\Cast\Assume\float;
 
-$money = float($data['money'] ?? null);
+$money = float($data['money'] ?? null); // $money is of type float|null
 ```
 
 # bool
@@ -102,7 +102,7 @@ With `bool` you get the bool-value for `true`, `false`, `1`, `0`, `on`, `off`, `
 ```php
 use function Dgame\Cast\Assume\bool;
 
-$checked = bool($data['checked'] ?? null);
+$checked = bool($data['checked'] ?? null); // $checked is of type bool|null
 ```
 
 ### boolify
@@ -112,7 +112,7 @@ With `boolify` you get either the `bool`-value or the `bool`-casted `scalar` val
 ```php
 use function Dgame\Cast\Assume\boolify;
 
-$checked = boolify($data['checked'] ?? null);
+$checked = boolify($data['checked'] ?? null); // $checked is of type bool|null
 ```
 
 # string
@@ -124,7 +124,7 @@ With `stringify` you get either the `string`-value or the `string`-casted `scala
 ```php
 use function Dgame\Cast\Assume\stringify;
 
-$value = stringify($data['value'] ?? null);
+$value = stringify($data['value'] ?? null); // $value is of type string|null
 ```
 
 # number
