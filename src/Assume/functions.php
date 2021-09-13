@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Assume;
 
+use Stringable;
 use function Dgame\Cast\Collection\all;
 
 function int(mixed $value): ?int
@@ -42,6 +43,11 @@ function floatify(mixed $value): ?float
 
 function bool(mixed $value): ?bool
 {
+    // since `null` is `false`
+    if ($value === null) {
+        return null;
+    }
+
     return is_bool($value) ? $value : filter_var($value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
 }
 
@@ -74,7 +80,7 @@ function stringify(mixed $value): ?string
         return (string) $result;
     }
 
-    return $value instanceof \Stringable ? (string) $result : null;
+    return $value instanceof Stringable ? (string) $result : null;
 }
 
 function number(mixed $value): float|int|null
@@ -84,7 +90,23 @@ function number(mixed $value): float|int|null
 
 function scalar(mixed $value): float|int|bool|string|null
 {
-    return number($value) ?? bool($value) ?? string($value);
+    if ($value === null) {
+        return null;
+    }
+
+    if (is_string($value)) {
+        return $value;
+    }
+
+    if (is_bool($value)) {
+        return $value;
+    }
+
+    if (is_numeric($value)) {
+        return number($value);
+    }
+
+    return null;
 }
 
 /**

@@ -57,7 +57,7 @@ final class BoolTest extends TestCase
         yield ['on', true];
         yield ['off', false];
         yield ['abc', null];
-        yield [null, false];
+        yield [null, null];
         yield ['1', true];
         yield ['0', false];
         yield [1, true];
@@ -95,7 +95,7 @@ final class BoolTest extends TestCase
         yield ['on', true];
         yield ['off', false];
         yield ['abc', true];
-        yield [null, false];
+        yield [null, null];
         yield ['1', true];
         yield ['0', false];
         yield [1, true];

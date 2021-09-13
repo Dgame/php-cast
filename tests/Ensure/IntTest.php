@@ -75,11 +75,11 @@ final class IntTest extends TestCase
         yield ['a42', 0];
         yield [true, 1];
         yield [false, 0];
-        yield ['true', 1];
+        yield ['true', 0];
         yield ['false', 0];
-        yield ['yes', 1];
+        yield ['yes', 0];
         yield ['no', 0];
-        yield ['on', 1];
+        yield ['on', 0];
         yield ['off', 0];
         yield ['abc', 0];
         yield [null, 0];
