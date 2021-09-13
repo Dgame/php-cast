@@ -46,7 +46,8 @@
         "files": [
             "src/Assume/functions.php",
             "src/Assert/functions.php",
-            "src/Collection/functions.php"
+            "src/Collection/functions.php",
+            "src/Ensure/functions.php"
         ]
     },
     "autoload-dev": {
