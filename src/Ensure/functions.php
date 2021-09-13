@@ -29,7 +29,7 @@ function bool(mixed $value, bool $default): bool
     return \Dgame\Cast\Assume\bool($value) ?? $default;
 }
 
-function boolify(mixed $value, bool $default): ?bool
+function boolify(mixed $value, bool $default): bool
 {
     return \Dgame\Cast\Assume\boolify($value) ?? $default;
 }
