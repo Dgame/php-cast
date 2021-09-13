@@ -53,3 +53,14 @@ function scalar(mixed $value, float|int|bool|string $default): float|int|bool|st
 {
     return \Dgame\Cast\Assume\scalar($value) ?? $default;
 }
+
+/**
+ * @param mixed                    $value
+ * @param array<int|string, mixed> $default
+ *
+ * @return array<int|string, mixed>
+ */
+function collection(mixed $value, array $default): array
+{
+    return \Dgame\Cast\Assume\collection($value) ?? $default;
+}
