@@ -211,3 +211,35 @@ function listOfNonEmpty(callable $typeEnsurance, mixed $values, ?string $message
 
     return $result ?? throw new AssertionError($message ?? var_export($values, true) . ' must be a non-empty list');
 }
+
+/**
+ * @return int[]
+ */
+function ints(int ...$values): array
+{
+    return array_values($values);
+}
+
+/**
+ * @return float[]
+ */
+function floats(float ...$values): array
+{
+    return array_values($values);
+}
+
+/**
+ * @return bool[]
+ */
+function bools(bool ...$values): array
+{
+    return array_values($values);
+}
+
+/**
+ * @return string[]
+ */
+function strings(string ...$values): array
+{
+    return array_values($values);
+}

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Assume;
 
-use Stringable;
 use function Dgame\Cast\Collection\all;
+use Stringable;
 
 function int(mixed $value): ?int
 {
@@ -43,7 +43,6 @@ function floatify(mixed $value): ?float
 
 function bool(mixed $value): ?bool
 {
-    // since `null` is `false`
     if ($value === null) {
         return null;
     }
@@ -165,8 +164,8 @@ function collection(mixed $value): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T $typeEnsurance
- * @param mixed              $values
+ * @param callable(mixed): ?T $typeEnsurance
+ * @param mixed               $values
  *
  * @return array<int|string, T>|null
  */
@@ -197,8 +196,8 @@ function collectionOf(callable $typeEnsurance, mixed $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T $typeEnsurance
- * @param mixed              $values
+ * @param callable(mixed): ?T $typeEnsurance
+ * @param mixed               $values
  *
  * @return non-empty-array<int|string, T>|null
  */
@@ -212,8 +211,8 @@ function collectionOfNonEmpty(callable $typeEnsurance, mixed $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T $typeEnsurance
- * @param mixed              $values
+ * @param callable(mixed): ?T $typeEnsurance
+ * @param mixed               $values
  *
  * @return array<string, T>|null
  */
@@ -235,8 +234,8 @@ function mapOf(callable $typeEnsurance, mixed $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T $typeEnsurance
- * @param mixed              $values
+ * @param callable(mixed): ?T $typeEnsurance
+ * @param mixed               $values
  *
  * @return non-empty-array<string, T>|null
  */
@@ -250,27 +249,26 @@ function mapOfNonEmpty(callable $typeEnsurance, mixed $values): ?array
 /**
  * @template T
  *
- * @param callable(mixed): T $typeEnsurance
- * @param mixed              $values
+ * @param callable(mixed): ?T $typeEnsurance
+ * @param mixed               $values
  *
  * @return array<int, T>|null
  */
 function listOf(callable $typeEnsurance, mixed $values): ?array
 {
     $values = collectionOf($typeEnsurance, $values);
-    if ($values === null || !array_is_list($values)) {
+    if ($values === null) {
         return null;
     }
 
-    /** @phpstan-ignore-next-line => phpstan does not recognize `array_is_list` yet */
-    return $values;
+    return array_values($values);
 }
 
 /**
  * @template T
  *
- * @param callable(mixed): T $typeEnsurance
- * @param mixed              $values
+ * @param callable(mixed): ?T $typeEnsurance
+ * @param mixed               $values
  *
  * @return non-empty-array<int, T>|null
  */
@@ -281,27 +279,42 @@ function listOfNonEmpty(callable $typeEnsurance, mixed $values): ?array
     return $values === null || $values === [] ? null : $values;
 }
 
-if (version_compare(PHP_VERSION, '8.1') === -1) {
-    /**
-     * @template T
-     *
-     * @param array<int|string, T> $array
-     *
-     * @return bool
-     */
-    function array_is_list(array $array): bool
-    {
-        if ($array === []) {
-            return true;
-        }
+/**
+ * @param iterable<int|string, mixed> $values
+ *
+ * @return int[]|null
+ */
+function ints(iterable $values): ?array
+{
+    return listOf('\Dgame\Cast\Assume\int', $values);
+}
 
-        $nextKey = -1;
-        foreach ($array as $k => $v) {
-            if ($k !== ++$nextKey) {
-                return false;
-            }
-        }
+/**
+ * @param iterable<int|string, mixed> $values
+ *
+ * @return float[]|null
+ */
+function floats(iterable $values): ?array
+{
+    return listOf('\Dgame\Cast\Assume\float', $values);
+}
 
-        return true;
-    }
+/**
+ * @param iterable<int|string, mixed> $values
+ *
+ * @return bool[]|null
+ */
+function bools(iterable $values): ?array
+{
+    return listOf('\Dgame\Cast\Assume\bool', $values);
+}
+
+/**
+ * @param iterable<int|string, mixed> $values
+ *
+ * @return string[]|null
+ */
+function strings(iterable $values): ?array
+{
+    return listOf('\Dgame\Cast\Assume\string', $values);
 }

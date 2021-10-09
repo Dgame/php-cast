@@ -64,3 +64,47 @@ function collection(mixed $value, array $default): array
 {
     return \Dgame\Cast\Assume\collection($value) ?? $default;
 }
+
+/**
+ * @param iterable<int|string, mixed> $values
+ * @param int[]                       $default
+ *
+ * @return int[]
+ */
+function ints(iterable $values, array $default = []): array
+{
+    return \Dgame\Cast\Assume\ints($values) ?? $default;
+}
+
+/**
+ * @param iterable<int|string, mixed> $values
+ * @param float[]                     $default
+ *
+ * @return float[]
+ */
+function floats(iterable $values, array $default = []): array
+{
+    return \Dgame\Cast\Assume\floats($values) ?? $default;
+}
+
+/**
+ * @param iterable<int|string, mixed> $values
+ * @param bool[]                      $default
+ *
+ * @return bool[]
+ */
+function bools(iterable $values, array $default = []): array
+{
+    return \Dgame\Cast\Assume\bools($values) ?? $default;
+}
+
+/**
+ * @param iterable<int|string, mixed> $is
+ * @param string[]                    $default
+ *
+ * @return string[]
+ */
+function strings(iterable $is, array $default = []): array
+{
+    return \Dgame\Cast\Assume\strings($is) ?? $default;
+}

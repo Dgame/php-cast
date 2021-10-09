@@ -7,11 +7,13 @@ namespace Dgame\Cast\Test\Assume;
 use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Assume\bool;
 use function Dgame\Cast\Assume\boolify;
+use function Dgame\Cast\Assume\bools;
+use function Dgame\Cast\Assume\collection;
 
 final class BoolTest extends TestCase
 {
     /**
-     * @param mixed      $input
+     * @param mixed     $input
      * @param bool|null $expected
      *
      * @dataProvider provideBools
@@ -22,7 +24,7 @@ final class BoolTest extends TestCase
     }
 
     /**
-     * @param mixed      $input
+     * @param mixed     $input
      * @param bool|null $expected
      *
      * @dataProvider provideBoolify
@@ -30,6 +32,17 @@ final class BoolTest extends TestCase
     public function testBoolify(mixed $input, ?bool $expected): void
     {
         $this->assertSame($expected, boolify($input));
+    }
+
+    /**
+     * @param array      $input
+     * @param array|null $expected
+     *
+     * @dataProvider provideBoolList
+     */
+    public function testBools(array $input, ?array $expected): void
+    {
+        $this->assertSame($expected, bools($input));
     }
 
     public function provideBools(): iterable
@@ -106,5 +119,48 @@ final class BoolTest extends TestCase
         yield ['  - 1', true];
         yield ['- 1', true];
         yield [[], null];
+    }
+
+    public function provideBoolList(): iterable
+    {
+        yield [
+            [1, 2, 3],
+            null
+        ];
+
+        yield [
+            [-1, 0, 1],
+            null
+        ];
+
+        yield [
+            ['yes', 'no'],
+            [true, false]
+        ];
+
+        yield [
+            [false => 'yes', true => 'no'],
+            [true, false]
+        ];
+
+        yield [
+            [1, 0],
+            [true, false]
+        ];
+
+        yield [
+            ['1', '0'],
+            [true, false]
+        ];
+
+        yield [
+            ['a', true],
+            null
+        ];
+
+        yield [
+            [],
+            []
+        ];
     }
 }
