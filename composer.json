@@ -41,7 +41,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Dgame\\Cast\\": "src/"
+            "Dgame\\Cast\\Assert\\": "src/Assert",
+            "Dgame\\Cast\\Assume\\": "src/Assume",
+            "Dgame\\Cast\\Collection\\": "src/Collection",
+            "Dgame\\Cast\\Ensure\\": "src/Ensure"
         },
         "files": [
             "src/Assume/functions.php",

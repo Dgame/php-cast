@@ -13,8 +13,12 @@ use function Dgame\Cast\Assume\listOf;
 use function Dgame\Cast\Assume\listOfNonEmpty;
 use function Dgame\Cast\Assume\mapOf;
 use function Dgame\Cast\Assume\mapOfNonEmpty;
+use function Dgame\Cast\Collection\bools;
 use function Dgame\Cast\Collection\filter;
 use function Dgame\Cast\Collection\filterMap;
+use function Dgame\Cast\Collection\floats;
+use function Dgame\Cast\Collection\ints;
+use function Dgame\Cast\Collection\strings;
 
 final class CollectionTest extends TestCase
 {
@@ -124,6 +128,24 @@ final class CollectionTest extends TestCase
     public function testFilterMap(array $values, callable $type, callable $callback, ?array $expected): void
     {
         $this->assertSame($expected, filterMap($type, $values, $callback));
+    }
+
+    /**
+     * @param array  $values
+     * @param string $type
+     * @param array  $expected
+     *
+     * @dataProvider provideInts
+     */
+    public function testInts(array $values, string $type, array $expected): void
+    {
+        match (true) {
+            str_ends_with($type, 'int') => $this->assertSame($expected, ints($values)),
+            str_ends_with($type, 'float') => $this->assertSame($expected, floats($values)),
+            str_ends_with($type, 'bool') => $this->assertSame($expected, bools($values)),
+            str_ends_with($type, 'string') => $this->assertSame($expected, strings($values)),
+            default => $this->fail('Unknown type: ' . $type)
+        };
     }
 
     public function provideCollection(): iterable
@@ -393,5 +415,29 @@ final class CollectionTest extends TestCase
         yield [['  '], '\Dgame\Cast\Assume\string', 'trim', ['']];
         yield [[1, 2, 3], '\Dgame\Cast\Assume\string', 'trim', []];
         yield [['a' => 1, 'b' => 2, 'c' => 3], '\Dgame\Cast\Assume\string', 'trim', []];
+    }
+
+    public function provideInts(): iterable
+    {
+        yield [[42], '\Dgame\Cast\Assume\int', [42]];
+        yield [[4.2], '\Dgame\Cast\Assume\int', []];
+        yield [[true], '\Dgame\Cast\Assume\int', [1]];
+        yield [[false], '\Dgame\Cast\Assume\int', []];
+        yield [[], '\Dgame\Cast\Assume\int', []];
+        yield [[null], '\Dgame\Cast\Assume\int', []];
+        yield [[''], '\Dgame\Cast\Assume\int', []];
+        yield [['1'], '\Dgame\Cast\Assume\int', [1]];
+        yield [['1', '2'], '\Dgame\Cast\Assume\int', [1, 2]];
+        yield [['1', '  2'], '\Dgame\Cast\Assume\int', [1, 2]];
+        yield [['1', 'a2'], '\Dgame\Cast\Assume\int', [1]];
+        yield [['  '], '\Dgame\Cast\Assume\int', []];
+        yield [[1, 2, 3], '\Dgame\Cast\Assume\int', [1, 2, 3]];
+        yield [[1, '2', 3], '\Dgame\Cast\Assume\int', [1, 2, 3]];
+        yield [[1, '  2', 3], '\Dgame\Cast\Assume\int', [1, 2, 3]];
+        yield [[1, 'a', 3], '\Dgame\Cast\Assume\int', [1, 3]];
+        yield [['a' => 1, 'b' => 2, 'c' => 3], '\Dgame\Cast\Assume\int', [1, 2, 3]];
+        yield [['a' => 1, 'b' => '2', 'c' => 3], '\Dgame\Cast\Assume\int', [1, 2, 3]];
+        yield [['a' => 1, 'b' => '  2', 'c' => 3], '\Dgame\Cast\Assume\int', [1, 2, 3]];
+        yield [['a' => 1, 'b' => 'b', 'c' => 3], '\Dgame\Cast\Assume\int', [1, 3]];
     }
 }

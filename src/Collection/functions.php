@@ -34,6 +34,46 @@ function filter(callable $typeEnsurance, iterable $values): array
 }
 
 /**
+ * @param iterable<mixed> $values
+ *
+ * @return int[]
+ */
+function ints(iterable $values): array
+{
+    return array_values(filter('\Dgame\Cast\Assume\int', $values));
+}
+
+/**
+ * @param iterable<mixed> $values
+ *
+ * @return float[]
+ */
+function floats(iterable $values): array
+{
+    return array_values(filter('\Dgame\Cast\Assume\float', $values));
+}
+
+/**
+ * @param iterable<mixed> $values
+ *
+ * @return bool[]
+ */
+function bools(iterable $values): array
+{
+    return array_values(filter('\Dgame\Cast\Assume\bool', $values));
+}
+
+/**
+ * @param iterable<mixed> $values
+ *
+ * @return string[]
+ */
+function strings(iterable $values): array
+{
+    return array_values(filter('\Dgame\Cast\Assume\string', $values));
+}
+
+/**
  * @template T
  *
  * @param callable(mixed): ?T         $typeEnsurance
