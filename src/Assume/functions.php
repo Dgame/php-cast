@@ -318,3 +318,23 @@ function strings(iterable $values): ?array
 {
     return listOf('\Dgame\Cast\Assume\string', $values);
 }
+
+/**
+ * @param iterable<int|string, mixed> $values
+ *
+ * @return array<int, float|int|bool|string>|null
+ */
+function scalars(iterable $values): ?array
+{
+    return listOf('\Dgame\Cast\Assume\scalar', $values);
+}
+
+/**
+ * @param iterable<int|string, mixed> $values
+ *
+ * @return array<int, int|float>|null
+ */
+function numbers(iterable $values): ?array
+{
+    return listOf('\Dgame\Cast\Assume\number', $values);
+}

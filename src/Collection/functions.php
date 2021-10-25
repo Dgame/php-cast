@@ -74,6 +74,26 @@ function strings(iterable $values): array
 }
 
 /**
+ * @param iterable<mixed> $values
+ *
+ * @return array<int, float|int|bool|string>
+ */
+function scalars(iterable $values): array
+{
+    return array_values(filter('\Dgame\Cast\Assume\scalar', $values));
+}
+
+/**
+ * @param iterable<mixed> $values
+ *
+ * @return array<int, int|float>
+ */
+function numbers(iterable $values): array
+{
+    return array_values(filter('\Dgame\Cast\Assume\number', $values));
+}
+
+/**
  * @template T
  *
  * @param callable(mixed): ?T         $typeEnsurance

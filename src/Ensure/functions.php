@@ -99,12 +99,34 @@ function bools(iterable $values, array $default = []): array
 }
 
 /**
- * @param iterable<int|string, mixed> $is
+ * @param iterable<int|string, mixed> $values
  * @param string[]                    $default
  *
  * @return string[]
  */
-function strings(iterable $is, array $default = []): array
+function strings(iterable $values, array $default = []): array
 {
-    return \Dgame\Cast\Assume\strings($is) ?? $default;
+    return \Dgame\Cast\Assume\strings($values) ?? $default;
+}
+
+/**
+ * @param iterable<int|string, mixed>       $values
+ * @param array<int, float|int|bool|string> $default
+ *
+ * @return array<int, float|int|bool|string>
+ */
+function scalars(iterable $values, array $default = []): array
+{
+    return \Dgame\Cast\Assume\scalars($values) ?? $default;
+}
+
+/**
+ * @param iterable<int|string, mixed> $values
+ * @param array<int, int|float>       $default
+ *
+ * @return array<int, int|float>
+ */
+function numbers(iterable $values, array $default = []): array
+{
+    return \Dgame\Cast\Assume\numbers($values) ?? $default;
 }
