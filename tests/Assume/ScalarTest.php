@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Assume;
 
-use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Assume\scalar;
+use PHPUnit\Framework\TestCase;
 
 final class ScalarTest extends TestCase
 {
@@ -29,7 +29,7 @@ final class ScalarTest extends TestCase
         yield ['  42', '  42'];
         yield ['42  ', '42  '];
         yield ['  42  ', '  42  '];
-        yield ['  4.2','  4.2'];
+        yield ['  4.2', '  4.2'];
         yield ['4.2  ', '4.2  '];
         yield ['  4.2  ', '  4.2  '];
         yield ['42a', '42a'];

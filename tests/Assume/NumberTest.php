@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Assume;
 
-use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Assume\number;
+use PHPUnit\Framework\TestCase;
 
 final class NumberTest extends TestCase
 {

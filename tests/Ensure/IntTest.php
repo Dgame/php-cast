@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Ensure;
 
-use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Ensure\int;
 use function Dgame\Cast\Ensure\intify;
+use PHPUnit\Framework\TestCase;
 
 final class IntTest extends TestCase
 {

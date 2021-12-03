@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Dgame\Cast\Collection;
 
 use function Dgame\Cast\Assume\collectionOf;
+use UnexpectedValueException;
 
 /**
+ * @template K of int|string
  * @template T
  *
- * @param callable(mixed): ?T         $typeEnsurance
- * @param iterable<int|string, mixed> $values
+ * @param callable(mixed):?T  $typeEnsurance
+ * @param iterable<K, mixed>  $values
  *
- * @return array<int|string, T>
+ * @return array<K, T>
  */
 function filter(callable $typeEnsurance, iterable $values): array
 {
@@ -34,7 +36,24 @@ function filter(callable $typeEnsurance, iterable $values): array
 }
 
 /**
- * @param iterable<mixed> $values
+ * @template K of int|string
+ * @template V
+ *
+ * @param array<K, V> $values
+ *
+ * @return non-empty-array<K, V>
+ */
+function nonEmpty(array $values): array
+{
+    if ($values === []) {
+        throw new UnexpectedValueException('Expected non-empty array');
+    }
+
+    return $values;
+}
+
+/**
+ * @param iterable<int|string, mixed> $values
  *
  * @return int[]
  */
@@ -44,7 +63,7 @@ function ints(iterable $values): array
 }
 
 /**
- * @param iterable<mixed> $values
+ * @param iterable<int|string, mixed> $values
  *
  * @return float[]
  */
@@ -54,7 +73,7 @@ function floats(iterable $values): array
 }
 
 /**
- * @param iterable<mixed> $values
+ * @param iterable<int|string, mixed> $values
  *
  * @return bool[]
  */
@@ -64,7 +83,7 @@ function bools(iterable $values): array
 }
 
 /**
- * @param iterable<mixed> $values
+ * @param iterable<int|string, mixed> $values
  *
  * @return string[]
  */
@@ -74,7 +93,7 @@ function strings(iterable $values): array
 }
 
 /**
- * @param iterable<mixed> $values
+ * @param iterable<int|string, mixed> $values
  *
  * @return array<int, float|int|bool|string>
  */
@@ -84,7 +103,7 @@ function scalars(iterable $values): array
 }
 
 /**
- * @param iterable<mixed> $values
+ * @param iterable<int|string, mixed> $values
  *
  * @return array<int, int|float>
  */
