@@ -130,3 +130,43 @@ function numbers(iterable $values, array $default = []): array
 {
     return \Dgame\Cast\Assume\numbers($values) ?? $default;
 }
+
+/**
+ * @template T of int|float
+ *
+ * @param T $n
+ * @param T $upperLimit
+ *
+ * @return T
+ */
+function atMost(int|float $n, int|float $upperLimit): int|float
+{
+    return min($n, $upperLimit);
+}
+
+/**
+ * @template T of int|float
+ *
+ * @param T $n
+ * @param T $lowerLimit
+ *
+ * @return T
+ */
+function atLeast(int|float $n, int|float $lowerLimit): int|float
+{
+    return max($lowerLimit, $n);
+}
+
+/**
+ * @template T of int|float
+ *
+ * @param T $n
+ * @param T $lowerLimit
+ * @param T $upperLimit
+ *
+ * @return T
+ */
+function between(int|float $n, int|float $lowerLimit, int|float $upperLimit): int|float
+{
+    return atLeast(atMost($n, $upperLimit), $lowerLimit);
+}
