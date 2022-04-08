@@ -113,7 +113,7 @@ function strings(iterable $values, array $default = []): array
  * @param iterable<int|string, mixed>       $values
  * @param array<int, float|int|bool|string> $default
  *
- * @return array<int, float|int|bool|string>
+ * @return list<float|int|bool|string>
  */
 function scalars(iterable $values, array $default = []): array
 {
@@ -124,7 +124,7 @@ function scalars(iterable $values, array $default = []): array
  * @param iterable<int|string, mixed> $values
  * @param array<int, int|float>       $default
  *
- * @return array<int, int|float>
+ * @return list<int|float>
  */
 function numbers(iterable $values, array $default = []): array
 {

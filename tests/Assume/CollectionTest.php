@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Assume;
 
+use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Assume\collection;
 use function Dgame\Cast\Assume\collectionOf;
 use function Dgame\Cast\Assume\collectionOfNonEmpty;
@@ -17,7 +18,6 @@ use function Dgame\Cast\Collection\filterMap;
 use function Dgame\Cast\Collection\floats;
 use function Dgame\Cast\Collection\ints;
 use function Dgame\Cast\Collection\strings;
-use PHPUnit\Framework\TestCase;
 
 final class CollectionTest extends TestCase
 {

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Ensure;
 
-use function Dgame\Cast\Ensure\number;
 use PHPUnit\Framework\TestCase;
+use function Dgame\Cast\Ensure\number;
 
 final class NumberTest extends TestCase
 {
     /**
-     * @param mixed      $input
+     * @param mixed     $input
      * @param int|float $expected
      *
      * @dataProvider provideNumbers
