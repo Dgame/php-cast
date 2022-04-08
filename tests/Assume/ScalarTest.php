@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Assume;
 
-use function Dgame\Cast\Assume\scalar;
 use PHPUnit\Framework\TestCase;
+use function Dgame\Cast\Assume\scalar;
 
 final class ScalarTest extends TestCase
 {
     /**
-     * @param mixed      $input
+     * @param mixed                      $input
      * @param int|float|bool|string|null $expected
      *
      * @dataProvider provideScalars

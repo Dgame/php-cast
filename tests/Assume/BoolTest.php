@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Assume;
 
+use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Assume\bool;
 use function Dgame\Cast\Assume\boolify;
 use function Dgame\Cast\Assume\bools;
-use PHPUnit\Framework\TestCase;
 
 final class BoolTest extends TestCase
 {

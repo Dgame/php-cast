@@ -1,6 +1,6 @@
 includes:
     - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
-    - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
+#    - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan/conf/bleedingEdge.neon

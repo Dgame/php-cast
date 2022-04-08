@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Ensure;
 
+use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Ensure\bool;
 use function Dgame\Cast\Ensure\boolify;
-use PHPUnit\Framework\TestCase;
 
 final class BoolTest extends TestCase
 {
     /**
-     * @param mixed      $input
-     * @param bool $expected
+     * @param mixed $input
+     * @param bool  $expected
      *
      * @dataProvider provideBools
      */
@@ -22,8 +22,8 @@ final class BoolTest extends TestCase
     }
 
     /**
-     * @param mixed      $input
-     * @param bool $expected
+     * @param mixed $input
+     * @param bool  $expected
      *
      * @dataProvider provideBoolify
      */

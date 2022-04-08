@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Assume;
 
+use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Assume\float;
 use function Dgame\Cast\Assume\floatify;
-use PHPUnit\Framework\TestCase;
 
 final class FloatTest extends TestCase
 {

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Test\Assume;
 
+use PHPUnit\Framework\TestCase;
 use function Dgame\Cast\Assume\negative;
 use function Dgame\Cast\Assume\positive;
 use function Dgame\Cast\Assume\unsigned;
-use PHPUnit\Framework\TestCase;
 
 final class IntegerRangeTest extends TestCase
 {
     /**
-     * @param mixed      $input
+     * @param mixed    $input
      * @param int|null $expected
      *
      * @dataProvider provideUnsignedInts
@@ -23,7 +23,7 @@ final class IntegerRangeTest extends TestCase
     }
 
     /**
-     * @param mixed      $input
+     * @param mixed    $input
      * @param int|null $expected
      *
      * @dataProvider providePositiveInts
@@ -34,7 +34,7 @@ final class IntegerRangeTest extends TestCase
     }
 
     /**
-     * @param mixed      $input
+     * @param mixed    $input
      * @param int|null $expected
      *
      * @dataProvider provideNegativeInts

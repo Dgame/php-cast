@@ -1,9 +1,9 @@
 {
     "name": "dgame/php-cast",
-    "type": "package",
     "description": "",
-    "keywords": [],
     "license": "MIT",
+    "type": "package",
+    "keywords": [],
     "authors": [
         {
             "name": "Randy Schütt",
@@ -30,15 +30,8 @@
         "thecodingmachine/phpstan-safe-rule": "^1.0",
         "thecodingmachine/phpstan-strict-rules": "^0.12"
     },
-    "config": {
-        "optimize-autoloader": true,
-        "platform": {
-            "php": "8.0"
-        },
-        "preferred-install": "dist",
-        "process-timeout": 0,
-        "sort-packages": true
-    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Dgame\\Cast\\Assert\\": "src/Assert",
@@ -58,8 +51,19 @@
             "Dgame\\Cast\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true
+        },
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "8.0"
+        },
+        "preferred-install": "dist",
+        "process-timeout": 0,
+        "sort-packages": true
+    },
     "scripts": {
         "coverage": "phpunit --coverage-clover=coverage",
         "lint": "phpcstd --continue",

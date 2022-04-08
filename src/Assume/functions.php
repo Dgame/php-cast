@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Dgame\Cast\Assume;
 
+use Closure;
 use function Dgame\Cast\Collection\all;
+use function Dgame\Cast\Collection\any;
 use Stringable;
+use Throwable;
 
 function int(mixed $value): ?int
 {
@@ -322,7 +325,7 @@ function strings(iterable $values): ?array
 /**
  * @param iterable<int|string, mixed> $values
  *
- * @return array<int, float|int|bool|string>|null
+ * @return list<float|int|bool|string>|null
  */
 function scalars(iterable $values): ?array
 {
@@ -332,9 +335,89 @@ function scalars(iterable $values): ?array
 /**
  * @param iterable<int|string, mixed> $values
  *
- * @return array<int, int|float>|null
+ * @return list<int|float>|null
  */
 function numbers(iterable $values): ?array
 {
     return listOf('\Dgame\Cast\Assume\number', $values);
+}
+
+/**
+ * @template T
+ *
+ * @param Closure():T                  $closure
+ * @param null|Closure(Throwable):void $handler
+ *
+ * @return T|null
+ */
+function trying(Closure $closure, Closure $handler = null): mixed
+{
+    try {
+        return $closure();
+    } catch (Throwable $t) {
+        if ($handler !== null) {
+            $handler($t);
+        }
+
+        return null;
+    }
+}
+
+/**
+ * @template T
+ *
+ * @param Closure():T             $closure
+ * @param class-string<Throwable> $exception
+ * @param class-string<Throwable> ...$exceptions
+ *
+ * @return T|null
+ * @throws Throwable
+ */
+function expect(Closure $closure, string $exception, string ...$exceptions): mixed
+{
+    try {
+        return $closure();
+    } catch (Throwable $t) {
+        if (!in_array($t::class, [$exception, ...$exceptions], strict: true)) {
+            throw $t;
+        }
+
+        return null;
+    }
+}
+
+/**
+ * @template T
+ *
+ * @param Closure():T             $closure
+ * @param class-string<Throwable> $exception
+ * @param class-string<Throwable> ...$exceptions
+ *
+ * @return T|null
+ * @throws Throwable
+ */
+function expectInstanceOf(Closure $closure, string $exception, string ...$exceptions): mixed
+{
+    try {
+        return $closure();
+    } catch (Throwable $t) {
+        if (any([$exception, ...$exceptions], static fn(string $e) => $t instanceof $e)) {
+            return null;
+        }
+
+        throw $t;
+    }
+}
+
+/**
+ * @template T of object
+ *
+ * @param class-string<T> $class
+ * @param mixed           $object
+ *
+ * @return T|null
+ */
+function object(string $class, mixed $object): ?object
+{
+    return $object instanceof $class ? $object : null;
 }

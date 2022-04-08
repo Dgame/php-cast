@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dgame\Cast\Assert;
 
 use AssertionError;
+use Throwable;
 
 function int(mixed $value, ?string $message = null): int
 {
@@ -247,7 +248,7 @@ function strings(string ...$values): array
 /**
  * @param iterable<int|string, mixed> $values
  *
- * @return array<int, float|int|bool|string>
+ * @return list<float|int|bool|string>
  */
 function scalars(iterable $values): array
 {
@@ -257,9 +258,28 @@ function scalars(iterable $values): array
 /**
  * @param iterable<int|string, mixed> $values
  *
- * @return array<int, int|float>
+ * @return list<int|float>
  */
 function numbers(iterable $values): array
 {
     return listOf('\Dgame\Cast\Assert\number', $values);
+}
+
+/**
+ * @template T of object
+ *
+ * @param class-string<T> $class
+ * @param mixed           $object
+ *
+ * @return T
+ * @throws Throwable
+ */
+function object(string $class, mixed $object): object
+{
+    $result = \Dgame\Cast\Assume\object($class, $object);
+    if ($result === null) {
+        throw new AssertionError(var_export($object, true) . ' must be instance of class ' . $class);
+    }
+
+    return $result;
 }
