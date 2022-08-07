@@ -111,6 +111,11 @@ function scalar(mixed $value): float|int|bool|string|null
     return null;
 }
 
+function mixed(mixed $value): mixed
+{
+    return $value;
+}
+
 /**
  * @phpstan-return int<0, max>
  */
